@@ -9,7 +9,6 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const domino = require("domino");
 const groupBy = require("lodash/groupBy");
-const sanitizeHtml = require("sanitize-html");
 
 const app = express();
 
@@ -46,6 +45,12 @@ const isRowPlayer = row => {
   });
 
   return returnVal;
+};
+
+const sanitizeHtml = html => {
+  let newHtml = html.replace(/<script>/gi, "");
+  newHtml = html.replace(/<\/script>/gi, "");
+  return newHtml;
 };
 
 app.get("/", function(req, res) {

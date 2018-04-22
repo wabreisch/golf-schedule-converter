@@ -12,6 +12,6 @@
     "sanitize-html": "^1.18.2"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   }
 }
