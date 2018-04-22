@@ -9,6 +9,8 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const domino = require("domino");
 const groupBy = require("lodash/groupBy");
+const sanitizeHtml = require("sanitize-html");
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, "build")));
@@ -51,9 +53,15 @@ app.get("/", function(req, res) {
 });
 
 app.post("/api/submit", function(req, res) {
-  let rosterWindow = domino.createWindow(req.body.roster, "roster");
+  let rosterWindow = domino.createWindow(
+    sanitizeHtml(req.body.roster),
+    "roster"
+  );
   let rosterDocument = rosterWindow.document;
-  let scheduleWindow = domino.createWindow(req.body.schedule, "schedule");
+  let scheduleWindow = domino.createWindow(
+    sanitizeHtml(req.body.schedule),
+    "schedule"
+  );
   let scheduleDocument = scheduleWindow.document;
 
   const allTrs = rosterDocument.querySelectorAll("tr");
