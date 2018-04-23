@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DragArea from "./DragArea";
 import "./App.css";
 
 class App extends Component {
@@ -99,7 +100,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div
+        {/* <div
           className={this.state.rosterHover ? "roster hover" : "roster"}
           onDragOver={this.onRosterDragOver}
           onDrop={this.onRosterDrop}
@@ -116,7 +117,24 @@ class App extends Component {
           <p>
             {this.state.scheduleContent ? "✔️ Schedule" : "Drag schedule here"}
           </p>
-        </div>
+        </div> */}
+
+        <DragArea
+          type="roster"
+          onDragOver={this.onRosterDragOver}
+          onDrop={this.onRosterDrop}
+          onDragLeave={this.onRosterDragLeave}
+          hover={this.state.rosterHover}
+          labelContent={this.state.rosterContent ? "✔️ Roster" : "Drag roster here"}
+        />
+        <DragArea
+          type="schedule"
+          onDragOver={this.onScheduleDragOver}
+          onDrop={this.onScheduleDrop}
+          onDragLeave={this.onScheduleDragLeave}
+          hover={this.state.scheduleHover}
+          labelContent={this.state.scheduleContent ? "✔️ Schedule" : "Drag schedule here"}
+        />
 
         <button
           className="submit"
