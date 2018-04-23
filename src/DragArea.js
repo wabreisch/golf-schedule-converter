@@ -1,20 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 
-class DragArea extends Component {
-  render() {
-    return (
-      <div
-        className={
-          this.props.hover ? `${this.props.type} hover` : `${this.props.type}`
-        }
-        onDragOver={this.props.onDragOver}
-        onDrop={this.props.onDrop}
-        onDragLeave={this.props.onDragLeave}
-      >
-        <p>{this.props.labelContent}</p>
-      </div>
-    );
-  }
-}
+const DragArea = props => {
+  return (
+    <div
+      className={
+        props.hover ? `${props.type} hover` : `${props.type}`
+      }
+      onDragOver={props.onDragOver}
+      onDrop={props.onDrop}
+      onDragLeave={props.onDragLeave}
+    >
+      <p>{props.labelContent}</p>
+    </div>
+  );
+};
 
 export default DragArea;
