@@ -100,25 +100,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <div
-          className={this.state.rosterHover ? "roster hover" : "roster"}
-          onDragOver={this.onRosterDragOver}
-          onDrop={this.onRosterDrop}
-          onDragLeave={this.onRosterDragLeave}
-        >
-          <p>{this.state.rosterContent ? "✔️ Roster" : "Drag roster here"}</p>
-        </div>
-        <div
-          className={this.state.scheduleHover ? "schedule hover" : "schedule"}
-          onDragOver={this.onScheduleDragOver}
-          onDrop={this.onScheduleDrop}
-          onDragLeave={this.onScheduleDragLeave}
-        >
-          <p>
-            {this.state.scheduleContent ? "✔️ Schedule" : "Drag schedule here"}
-          </p>
-        </div> */}
-
         <DragArea
           type="roster"
           onDragOver={this.onRosterDragOver}
