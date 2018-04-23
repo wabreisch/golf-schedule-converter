@@ -24,13 +24,14 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        this.setState({
-          editedScheduleContent: res.editedSchedule
-        });
-
-        setTimeout(() => {
-          document.getElementById("download").click();
-        }, 250);
+        this.setState(
+          {
+            editedScheduleContent: res.editedSchedule
+          },
+          () => {
+            document.getElementById("download").click();
+          }
+        );
       });
 
     this.setState({
@@ -98,6 +99,13 @@ class App extends Component {
   };
 
   render() {
+    const rosterLabelContent = this.state.rosterContent
+      ? "✔️ Roster"
+      : "Drag roster here";
+    const scheduleLabelContent = this.state.scheduleContent
+      ? "✔️ Schedule"
+      : "Drag schedule here";
+
     return (
       <div className="App">
         <DragArea
@@ -106,7 +114,7 @@ class App extends Component {
           onDrop={this.onRosterDrop}
           onDragLeave={this.onRosterDragLeave}
           hover={this.state.rosterHover}
-          labelContent={this.state.rosterContent ? "✔️ Roster" : "Drag roster here"}
+          labelContent={rosterLabelContent}
         />
         <DragArea
           type="schedule"
@@ -114,7 +122,7 @@ class App extends Component {
           onDrop={this.onScheduleDrop}
           onDragLeave={this.onScheduleDragLeave}
           hover={this.state.scheduleHover}
-          labelContent={this.state.scheduleContent ? "✔️ Schedule" : "Drag schedule here"}
+          labelContent={scheduleLabelContent}
         />
 
         <button
