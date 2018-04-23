@@ -1,7 +1,3 @@
-require("dotenv").config({
-  path: "./variables.env"
-});
-
 const PORT = 7777;
 const express = require("express");
 const path = require("path");
