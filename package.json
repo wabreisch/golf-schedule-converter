@@ -11,6 +11,7 @@
     "react-scripts": "3.4.1",
     "sanitize-html": "^1.18.2"
   },
+  "proxy": "http://localhost:7777",
   "scripts": {
     "start": "node app.js",
     "build": "react-scripts build"

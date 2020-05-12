@@ -18,14 +18,14 @@ const reservedWords = [
   "Player",
   "Handicap",
   "Phone",
-  "Substitutes"
-].map(w => w.toLocaleLowerCase());
+  "Substitutes",
+].map((w) => w.toLocaleLowerCase());
 
-const isRowPlayer = row => {
+const isRowPlayer = (row) => {
   let returnVal = true;
   const tdChildren = Array.from(row.children);
   const currRow = tdChildren
-    .map(child => {
+    .map((child) => {
       return child.querySelector("font").innerHTML;
     })
     .join(",");
@@ -34,7 +34,7 @@ const isRowPlayer = row => {
     returnVal = false;
   }
 
-  reservedWords.forEach(w => {
+  reservedWords.forEach((w) => {
     if (currRow.toLocaleLowerCase().includes(w)) {
       returnVal = false;
     }
@@ -43,17 +43,17 @@ const isRowPlayer = row => {
   return returnVal;
 };
 
-const sanitizeHtml = html => {
+const sanitizeHtml = (html) => {
   let newHtml = html.replace(/<script>/gi, "");
   newHtml = html.replace(/<\/script>/gi, "");
   return newHtml;
 };
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-app.post("/api/submit", function(req, res) {
+app.post("/api/submit", function (req, res) {
   let rosterWindow = domino.createWindow(
     sanitizeHtml(req.body.roster),
     "roster"
@@ -75,25 +75,32 @@ app.post("/api/submit", function(req, res) {
         name: tr.children[1].querySelector("font").innerHTML,
         handicap: tr.children[2].querySelector("font").innerHTML,
         homePhone: tr.children[3].querySelector("font").innerHTML,
-        workPhone: tr.children[4].querySelector("font").innerHTML
+        workPhone: tr.children[4].querySelector("font").innerHTML,
       });
     }
   });
 
   const groupedPlayers = groupBy(players, "team");
-
   const allScheduleTrs = scheduleDocument.querySelectorAll("tr");
+
+  fs.writeFileSync("debug.json", JSON.stringify(groupedPlayers, null, 2));
+
   Array.from(allScheduleTrs).forEach((tr, index) => {
     Array.from(tr.children).forEach((child, childIndex) => {
       if (index > 0) {
-        if (childIndex >= 4 && childIndex <= 9) {
+        if (childIndex >= 4 && childIndex <= 7) {
           const res = tr.children[childIndex]
             .querySelector("fonts")
-            .innerHTML.split("-")
-            .map(m => {
+            .innerHTML.split("vs")
+            .map((m) => {
+              if (!groupedPlayers[m.trim()]) {
+                return;
+              }
               return groupedPlayers[m.trim()]
-                .map(p => {
-                  const nameSplit = p.name.split(",").map(name => name.trim());
+                .map((p) => {
+                  const nameSplit = p.name
+                    .split(",")
+                    .map((name) => name.trim());
                   return `${nameSplit[1]} ${nameSplit[0]}`;
                 })
                 .join(" & ");
@@ -121,7 +128,7 @@ app.post("/api/submit", function(req, res) {
   `;
 
   res.json({
-    editedSchedule: `${scheduleStyle}\n${scheduleDocument.innerHTML}`
+    editedSchedule: `${scheduleStyle}\n${scheduleDocument.innerHTML}`,
   });
 });
 
