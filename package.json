@@ -6,12 +6,25 @@
     "domino": "^2.0.2",
     "express": "^4.16.3",
     "nodemon": "^1.17.3",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
     "sanitize-html": "^1.18.2"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "build": "react-scripts build"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
